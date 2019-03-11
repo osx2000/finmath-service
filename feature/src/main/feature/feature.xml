@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="finmath-services-features" xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
+
+    <repository>mvn:org.apache.cxf.karaf/apache-cxf/${cxf.version}/xml/features</repository>
+    <repository>mvn:org.apache.aries.jax.rs/org.apache.aries.jax.rs.features/${org.apache.aries.jax.rs.version}/xml</repository>
+
+
+    <feature name="finmath-base" version="${project.version}">
+        <feature prerequisite="true">wrap</feature>
+        <bundle>mvn:net.finmath/finmath-lib/${finmath.version}</bundle>
+        <bundle>wrap:mvn:net.finmath/finmath-lib/${finmath-legacy.version}</bundle>
+        <bundle>wrap:mvn:net.finmath/finmath-smart-derivative-contract/${finmath-smart-derivative-contract.version}</bundle>
+        <bundle>mvn:org.apache.commons/commons-lang3/${commons-lang3.version}</bundle>
+        <bundle>mvn:org.apache.commons/commons-math3/${commons-math3.version}</bundle>
+    </feature>
+
+
+    <feature name="finmath-service" version="${project.version}">
+        <feature dependency="true">http</feature>
+        <requirement>osgi.service;effective:=active;filter:=(objectClass=org.osgi.service.http.HttpService)</requirement>
+        <feature version="${cxf.version}" dependency="true">cxf</feature>
+        <feature>finmath-base</feature>
+        <feature>scr</feature>
+        <bundle>mvn:com.google.code.gson/gson/${gson.version}</bundle>
+        <bundle>mvn:de.osx2000.finmath/api/${project.version}</bundle>
+        <bundle>mvn:de.osx2000.finmath/engine/${project.version}</bundle>
+        <bundle>mvn:de.osx2000.finmath/service/${project.version}</bundle>
+    </feature>
+</features>

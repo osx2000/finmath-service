@@ -28,7 +28,7 @@
         <dependency>
             <groupId>net.finmath</groupId>
             <artifactId>finmath-lib</artifactId>
-            <version>${finmath.version}</version>
+            <version>${finmath-legacy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>

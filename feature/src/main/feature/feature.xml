@@ -7,8 +7,8 @@
 
     <feature name="finmath-base" version="${project.version}">
         <feature prerequisite="true">wrap</feature>
-        <bundle>mvn:net.finmath/finmath-lib/${finmath.version}</bundle>
-        <bundle>wrap:mvn:net.finmath/finmath-lib/${finmath-legacy.version}</bundle>
+        <!--<bundle>mvn:net.finmath/finmath-lib/${finmath.version}</bundle>-->
+        <bundle>mvn:net.finmath/finmath-lib/${finmath-legacy.version}</bundle>
         <bundle>wrap:mvn:net.finmath/finmath-smart-derivative-contract/${finmath-smart-derivative-contract.version}</bundle>
         <bundle>mvn:org.apache.commons/commons-lang3/${commons-lang3.version}</bundle>
         <bundle>mvn:org.apache.commons/commons-math3/${commons-math3.version}</bundle>

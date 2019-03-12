@@ -3,6 +3,7 @@ package de.osx2000.finmath.engine;
 import de.osx2000.finmath.api.ProductDescriptorGenerator;
 import net.finmath.time.Schedule;
 import net.finmath.time.ScheduleGenerator;
+import net.finmath.time.ScheduleInterface;
 import net.finmath.time.ScheduleMetaData;
 import net.finmath.time.businessdaycalendar.BusinessdayCalendar;
 import net.finmath.time.businessdaycalendar.BusinessdayCalendarExcludingTARGETHolidays;
@@ -50,11 +51,11 @@ public class ProductDescriptorGeneratorImpl implements ProductDescriptorGenerato
         result.put("leg2.daycountConvention", ScheduleGenerator.DaycountConvention.ACT_360);
 
         ScheduleMetaData schedulePrototypeFloat = new ScheduleMetaData(frequencyFloat, ScheduleGenerator.DaycountConvention.ACT_360, ScheduleGenerator.ShortPeriodConvention.FIRST, BusinessdayCalendar.DateRollConvention.FOLLOWING, new BusinessdayCalendarExcludingTARGETHolidays(), 2, 2, false);
-        Schedule scheduleFloat = schedulePrototypeFloat.generateSchedule(referenceDate, startDate, endDate);
+        ScheduleInterface scheduleFloat = schedulePrototypeFloat.generateSchedule(referenceDate, startDate, endDate);
         result.put("leg1.periods", new ArrayList<>(scheduleFloat.getPeriods()));
 
         ScheduleMetaData schedulePrototypeFix = new ScheduleMetaData(ScheduleGenerator.Frequency.ANNUAL, ScheduleGenerator.DaycountConvention.ACT_360, ScheduleGenerator.ShortPeriodConvention.FIRST, BusinessdayCalendar.DateRollConvention.FOLLOWING, new BusinessdayCalendarExcludingTARGETHolidays(), 2, 2, false);
-        Schedule scheduleFix = schedulePrototypeFix.generateSchedule(referenceDate, startDate, endDate);
+        ScheduleInterface scheduleFix = schedulePrototypeFix.generateSchedule(referenceDate, startDate, endDate);
         result.put("leg2.periods", new ArrayList<>(scheduleFix.getPeriods()));
 
         return result;

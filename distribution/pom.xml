@@ -44,6 +44,14 @@
             <scope>runtime</scope>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.hawt</groupId>
+            <artifactId>hawtio-karaf</artifactId>
+            <version>2.6.0</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -73,7 +81,10 @@
                         <feature>standard</feature>
                         <feature>webconsole</feature>
                         <feature>aries-jax-rs-whiteboard</feature>
+                        <feature>swagger-jaxrs</feature>
                         <feature>finmath-service</feature>
+                        <feature>karaf-administrative</feature>
+                        <feature>hawtio</feature>
                     </bootFeatures>
                 </configuration>
             </plugin>

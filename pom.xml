@@ -14,8 +14,8 @@
         <maven.compiler.release>11</maven.compiler.release>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <karaf.version>4.2.3</karaf.version>
-        <org.apache.aries.jax.rs.version>1.0.4</org.apache.aries.jax.rs.version>
+        <karaf.version>4.2.6</karaf.version>
+        <org.apache.aries.jax.rs.version>1.0.5</org.apache.aries.jax.rs.version>
         <finmath.version>4.0.6</finmath.version>
         <finmath-legacy.version>3.6.3</finmath-legacy.version>
         <bnd.version>4.2.0</bnd.version>
@@ -26,6 +26,7 @@
         <cxf.version>3.3.1</cxf.version>
         <finmath-smart-derivative-contract.version>0.1.2</finmath-smart-derivative-contract.version>
         <gson.version>2.8.5</gson.version>
+        <swagger-jaxrs2.version>2.0.8</swagger-jaxrs2.version>
     </properties>
 
     <modules>

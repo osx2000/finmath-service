@@ -25,5 +25,13 @@
         <bundle>mvn:de.osx2000.finmath/api/${project.version}</bundle>
         <bundle>mvn:de.osx2000.finmath/engine/${project.version}</bundle>
         <bundle>mvn:de.osx2000.finmath/service/${project.version}</bundle>
+        <bundle>mvn:io.swagger.core.v3/swagger-jaxrs2-servlet-initializer/${swagger.version}</bundle>
+        <bundle>mvn:io.swagger.core.v3/swagger-jaxrs2/${swagger.version}</bundle>
+        <bundle>mvn:io.swagger.core.v3/swagger-core/${swagger.version}</bundle>
+        <bundle>mvn:io.swagger.core.v3/swagger-models/${swagger.version}</bundle>
+        <bundle>mvn:io.swagger.core.v3/swagger-annotations/${swagger.version}</bundle>
+        <bundle>mvn:io.swagger.core.v3/swagger-integration/${swagger.version}</bundle>
+        <bundle>mvn:io.github.classgraph/classgraph/4.8.14</bundle>
+        <bundle>mvn:javax.validation/validation-api/1.1.0.Final</bundle>
     </feature>
 </features>

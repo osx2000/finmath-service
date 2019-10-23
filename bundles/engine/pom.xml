@@ -36,6 +36,11 @@
             <version>${osgi.cmpn.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.jaxrs</artifactId>
+            <version>${org.osgi.service.jaxrs.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

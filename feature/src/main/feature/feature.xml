@@ -33,5 +33,9 @@
         <bundle>mvn:io.swagger.core.v3/swagger-integration/${swagger.version}</bundle>
         <bundle>mvn:io.github.classgraph/classgraph/4.8.14</bundle>
         <bundle>mvn:javax.validation/validation-api/1.1.0.Final</bundle>
+        <bundle>mvn:com.fasterxml.jackson.datatype/jackson-datatype-jsr310/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
     </feature>
 </features>

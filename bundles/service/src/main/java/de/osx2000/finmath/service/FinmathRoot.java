@@ -1,13 +1,12 @@
 package de.osx2000.finmath.service;
 
-import javax.ws.rs.core.Application;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationBase;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsName;
 
-@Component(service = Application.class)
+import javax.ws.rs.core.Application;
 
+@Component(service = Application.class)
 @JaxrsName(FinmathRoot.APPLICATION_NAME)
 @JaxrsApplicationBase(FinmathRoot.APPLICATION_BASE)
 public class FinmathRoot extends Application {

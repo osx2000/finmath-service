@@ -23,7 +23,6 @@
         <dependency>
             <groupId>net.finmath</groupId>
             <artifactId>finmath-smart-derivative-contract</artifactId>
-            <version>${finmath-smart-derivative-contract.version}</version>
         </dependency>
         <dependency>
             <groupId>net.finmath</groupId>

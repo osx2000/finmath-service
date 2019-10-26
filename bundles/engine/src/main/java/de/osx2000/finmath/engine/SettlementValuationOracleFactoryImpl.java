@@ -42,7 +42,7 @@ public class SettlementValuationOracleFactoryImpl implements SettlementValuation
 		StochasticValuationOracle stoachasticOracleForCollateral = new ContinouslyCompoundedBankAccountOracle(initialTime);
 		ValuationOracle collateralOracle = new ValuationOracleSamplePath(stoachasticOracleForCollateral, path);
 
-		SmartDerivativeContractMargining smartDerivativeContractMargening = new SmartDerivativeContractMargining(valuationOracle, collateralOracle);
+		SmartDerivativeContractMargining smartDerivativeContractMargening = new SmartDerivativeContractMargining(valuationOracle);
 
 		return smartDerivativeContractMargening;
 	}

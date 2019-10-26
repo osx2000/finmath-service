@@ -3,6 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.finmath</groupId>
+                <artifactId>finmath-smart-derivative-contract</artifactId>
+                <version>0.1.3</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>junit-jupiter-api</artifactId>
+                        <groupId>org.junit.jupiter</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <parent>
         <groupId>de.osx2000.finmath</groupId>

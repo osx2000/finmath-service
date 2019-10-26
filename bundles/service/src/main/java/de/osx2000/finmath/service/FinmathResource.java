@@ -3,8 +3,9 @@ package de.osx2000.finmath.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.osx2000.finmath.api.ProductDescriptorGenerator;
-import de.osx2000.finmath.api.SettlementValuationOracleFactory;
 import de.osx2000.finmath.api.SettlementValuation;
+import de.osx2000.finmath.api.SettlementValuationOracleFactory;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import net.finmath.smartcontract.contract.SmartDerivativeContractSchedule;
 import net.finmath.smartcontract.contract.SmartDerivativeContractScheduleGenerator;
 import org.osgi.service.component.annotations.Component;
@@ -27,6 +28,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Component(service = FinmathResource.class)
+@OpenAPIDefinition()
 @JaxrsName("FinmathResource")
 @JaxrsResource
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + FinmathRoot.APPLICATION_NAME + ")")

@@ -15,13 +15,10 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.osgi.framework.*;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
-import org.osgi.service.jaxrs.runtime.dto.ApplicationDTO;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationSelect;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsName;
@@ -37,9 +34,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @ObjectClassDefinition(name = "Service Root Configuration")
 @interface OpenApiJaxrsConfiguration {
@@ -66,24 +64,11 @@ public class OpenApiResource {
     @Context
     Application app;
 
-    private OpenAPIConfiguration openAPIConfiguration;
+    private OpenApiJaxrsConfiguration openApiJaxrsConfiguration;
 
     @Activate
     private void activate(OpenApiJaxrsConfiguration openApiJaxrsConfiguration) {
-        OpenAPI openAPI = new OpenAPI();
-        Info info = new Info()
-                .title(openApiJaxrsConfiguration.swaggerTitle())
-                .description(openApiJaxrsConfiguration.swaggerDescription())
-                .contact(new Contact()
-                        .email(openApiJaxrsConfiguration.swaggerContact()))
-                ;
-
-        openAPI.info(info);
-
-        openAPIConfiguration = new SwaggerConfiguration()
-                .openAPI(openAPI)
-                .prettyPrint(true);
-
+        this.openApiJaxrsConfiguration = openApiJaxrsConfiguration;
     }
 
     @GET
@@ -97,7 +82,20 @@ public class OpenApiResource {
 
     private static Logger LOGGER = LoggerFactory.getLogger(OpenApiResource.class);
 
-    protected Response getOpenApi(HttpHeaders headers, ServletConfig config, Application app, UriInfo uriInfo, String type) throws Exception {
+    private Response getOpenApi(HttpHeaders headers, ServletConfig config, Application app, UriInfo uriInfo, String type) throws Exception {
+
+        OpenAPI openAPI = new OpenAPI();
+        openAPI.info(new Info()
+                .title(openApiJaxrsConfiguration.swaggerTitle())
+                .description(openApiJaxrsConfiguration.swaggerDescription())
+                .contact(new Contact()
+                        .email(openApiJaxrsConfiguration.swaggerContact()))
+                );
+        openAPI.addServersItem(new Server().url(uriInfo.getBaseUri().toString()));
+
+        OpenAPIConfiguration openAPIConfiguration = new SwaggerConfiguration()
+                .openAPI(openAPI)
+                .prettyPrint(true);
 
         String ctxId = ServletConfigContextUtils.getContextIdFromServletConfig(config);
 
@@ -132,47 +130,37 @@ public class OpenApiResource {
     }
 
     private static Map<String, List<String>> getQueryParams(MultivaluedMap<String, String> params) {
-        Map<String, List<String>> output = new HashMap();
+        Map<String, List<String>> output = new HashMap<>();
         if (params != null) {
-            Iterator var2 = params.keySet().iterator();
-
-            while(var2.hasNext()) {
-                String key = (String)var2.next();
-                List<String> values = (List)params.get(key);
+            params.keySet().forEach(key -> {
+                List<String> values = params.get(key);
                 output.put(key, values);
-            }
+            });
         }
 
         return output;
     }
 
     private static Map<String, String> getCookies(HttpHeaders headers) {
-        Map<String, String> output = new HashMap();
+        Map<String, String> output = new HashMap<>();
         if (headers != null) {
-            Iterator var2 = headers.getCookies().keySet().iterator();
-
-            while(var2.hasNext()) {
-                String key = (String)var2.next();
-                Cookie cookie = (Cookie)headers.getCookies().get(key);
+            headers.getCookies().keySet().forEach(key -> {
+                Cookie cookie = headers.getCookies().get(key);
                 output.put(key, cookie.getValue());
-            }
+            });
         }
 
         return output;
     }
 
     private static Map<String, List<String>> getHeaders(HttpHeaders headers) {
-        Map<String, List<String>> output = new HashMap();
+        Map<String, List<String>> output = new HashMap<>();
         if (headers != null) {
-            Iterator var2 = headers.getRequestHeaders().keySet().iterator();
-
-            while(var2.hasNext()) {
-                String key = (String)var2.next();
-                List<String> values = (List)headers.getRequestHeaders().get(key);
+            headers.getRequestHeaders().keySet().forEach(key -> {
+                List<String> values = headers.getRequestHeaders().get(key);
                 output.put(key, values);
-            }
+            });
         }
-
         return output;
     }
 }

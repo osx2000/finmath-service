@@ -41,10 +41,7 @@ import java.util.Map;
 
 @ObjectClassDefinition(name = "Service Root Configuration")
 @interface OpenApiJaxrsConfiguration {
-    String serverAddress() default "/rest";
-
-    String swaggerBasePath() default "/services/rest";
-
+  
     String swaggerDescription() default "Service REST API";
 
     String swaggerTitle() default "My Service";

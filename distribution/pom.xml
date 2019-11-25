@@ -86,9 +86,9 @@
                 <version>${karaf.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <startupFeatures>
+                    <!--<startupFeatures>
                         <feature>eventadmin</feature>
-                    </startupFeatures>
+                    </startupFeatures>-->
                     <bootFeatures>
                         <feature>standard</feature>
                         <feature>webconsole</feature>

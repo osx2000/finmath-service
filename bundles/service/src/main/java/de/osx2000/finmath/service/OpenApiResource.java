@@ -6,6 +6,7 @@ import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.jaxrs2.integration.ServletConfigContextUtils;
+import io.swagger.v3.jaxrs2.integration.resources.BaseOpenApiResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.integration.SwaggerConfiguration;
 import io.swagger.v3.oas.integration.api.OpenAPIConfiguration;
@@ -53,8 +54,9 @@ import java.util.Map;
 @Component(service = OpenApiResource.class)
 @JaxrsName("OpenApiResource")
 @JaxrsResource
-@JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + FinmathRoot.APPLICATION_NAME + ")")
-public class OpenApiResource {
+//FinmathRoot.APPLICATION_NAME
+@JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + "*" + ")")
+public class OpenApiResource extends BaseOpenApiResource {
     @Context
     ServletConfig config;
 
@@ -74,12 +76,6 @@ public class OpenApiResource {
             hidden = true
     )
     public Response getOpenApi(@Context HttpHeaders headers, @Context UriInfo uriInfo, @PathParam("type") String type) throws Exception {
-        return getOpenApi(headers, this.config, this.app, uriInfo, type);
-    }
-
-    private static Logger LOGGER = LoggerFactory.getLogger(OpenApiResource.class);
-
-    private Response getOpenApi(HttpHeaders headers, ServletConfig config, Application app, UriInfo uriInfo, String type) throws Exception {
 
         OpenAPI openAPI = new OpenAPI();
         openAPI.info(new Info()
@@ -87,77 +83,16 @@ public class OpenApiResource {
                 .description(openApiJaxrsConfiguration.swaggerDescription())
                 .contact(new Contact()
                         .email(openApiJaxrsConfiguration.swaggerContact()))
-                );
+        );
+
         openAPI.addServersItem(new Server().url(uriInfo.getBaseUri().toString()));
 
         OpenAPIConfiguration openAPIConfiguration = new SwaggerConfiguration()
                 .openAPI(openAPI)
                 .prettyPrint(true);
 
-        String ctxId = ServletConfigContextUtils.getContextIdFromServletConfig(config);
+        super.setOpenApiConfiguration(openAPIConfiguration);
 
-        OpenApiContext ctx = (new JaxrsOpenApiContextBuilder())
-                .servletConfig(config)
-                .application(app)
-                .openApiConfiguration(openAPIConfiguration)
-                .ctxId(ctxId)
-                .buildContext(true);
-
-        OpenAPI oas = ctx.read();
-        boolean pretty = false;
-        if (ctx.getOpenApiConfiguration() != null && Boolean.TRUE.equals(ctx.getOpenApiConfiguration().isPrettyPrint())) {
-            pretty = true;
-        }
-
-        if (oas != null && ctx.getOpenApiConfiguration() != null && ctx.getOpenApiConfiguration().getFilterClass() != null) {
-            try {
-                OpenAPISpecFilter filterImpl = (OpenAPISpecFilter)Class.forName(ctx.getOpenApiConfiguration().getFilterClass()).newInstance();
-                SpecFilter f = new SpecFilter();
-                oas = f.filter(oas, filterImpl, getQueryParams(uriInfo.getQueryParameters()), getCookies(headers), getHeaders(headers));
-            } catch (Exception var12) {
-                LOGGER.error("failed to load filter", var12);
-            }
-        }
-
-        if (oas == null) {
-            return Response.status(404).build();
-        } else {
-            return StringUtils.isNotBlank(type) && type.trim().equalsIgnoreCase("yaml") ? Response.status(Response.Status.OK).entity(pretty ? Yaml.pretty(oas) : Yaml.mapper().writeValueAsString(oas)).type("application/yaml").build() : Response.status(Response.Status.OK).entity(pretty ? Json.pretty(oas) : Json.mapper().writeValueAsString(oas)).type(MediaType.APPLICATION_JSON_TYPE).build();
-        }
-    }
-
-    private static Map<String, List<String>> getQueryParams(MultivaluedMap<String, String> params) {
-        Map<String, List<String>> output = new HashMap<>();
-        if (params != null) {
-            params.keySet().forEach(key -> {
-                List<String> values = params.get(key);
-                output.put(key, values);
-            });
-        }
-
-        return output;
-    }
-
-    private static Map<String, String> getCookies(HttpHeaders headers) {
-        Map<String, String> output = new HashMap<>();
-        if (headers != null) {
-            headers.getCookies().keySet().forEach(key -> {
-                Cookie cookie = headers.getCookies().get(key);
-                output.put(key, cookie.getValue());
-            });
-        }
-
-        return output;
-    }
-
-    private static Map<String, List<String>> getHeaders(HttpHeaders headers) {
-        Map<String, List<String>> output = new HashMap<>();
-        if (headers != null) {
-            headers.getRequestHeaders().keySet().forEach(key -> {
-                List<String> values = headers.getRequestHeaders().get(key);
-                output.put(key, values);
-            });
-        }
-        return output;
+        return super.getOpenApi(headers, config, app, uriInfo, type);
     }
 }

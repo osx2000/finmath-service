@@ -30,6 +30,13 @@
             <artifactId>engine</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.hawt</groupId>
+            <artifactId>hawtio-karaf</artifactId>
+            <version>${hawtio.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
     </dependencies>
 
     <build>

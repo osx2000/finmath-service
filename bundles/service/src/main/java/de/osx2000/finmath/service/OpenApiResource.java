@@ -1,33 +1,21 @@
 package de.osx2000.finmath.service;
 
-import io.swagger.v3.core.filter.OpenAPISpecFilter;
-import io.swagger.v3.core.filter.SpecFilter;
-import io.swagger.v3.core.util.Json;
-import io.swagger.v3.core.util.Yaml;
-import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
-import io.swagger.v3.jaxrs2.integration.ServletConfigContextUtils;
 import io.swagger.v3.jaxrs2.integration.resources.BaseOpenApiResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.integration.SwaggerConfiguration;
 import io.swagger.v3.oas.integration.api.OpenAPIConfiguration;
-import io.swagger.v3.oas.integration.api.OpenApiContext;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationSelect;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsName;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsResource;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.ws.rs.GET;
@@ -35,10 +23,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @ObjectClassDefinition(name = "Service Root Configuration")
 @interface OpenApiJaxrsConfiguration {

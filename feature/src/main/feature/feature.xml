@@ -14,6 +14,11 @@
         <bundle>mvn:org.apache.commons/commons-math3/${commons-math3.version}</bundle>
     </feature>
 
+    <feature name="osx2000-hawtio" version="${project.version}">
+        <feature>hawtio</feature>
+        <bundle>mvn:org.ops4j.pax.logging/pax-logging-api/1.11.5</bundle>
+    </feature>
+
 
     <feature name="finmath-service" version="${project.version}">
         <feature dependency="true">http</feature>
